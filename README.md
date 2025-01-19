@@ -1,1 +1,1 @@
-THis is the course DSAI3202 
+This is the course DSAI3202 
