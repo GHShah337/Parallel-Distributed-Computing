@@ -1,34 +1,49 @@
 # main.py
-import threading
-from queue import Queue
-from src.sensor import simulate_sensor
-from src.processor import process_temperatures
-from src.display import initialize_display, update_display
-from threading import RLock
-lock = RLock
+import time
+from threading import Thread
+from src.simulate_sensor import simulate_sensor, latest_temperatures, temperature_averages
+from src.processes import process_temperatures
+
+def display_temperatures():
+    while True:
+        print("\033[H\033[J")  # Clear the console screen
+        print("=" * 43)
+        print("Sensor ID \t Latest Temp \t Avg Temp")
+        print("=" * 43)
+
+        for sensor_id in latest_temperatures:
+            latest_temp = latest_temperatures[sensor_id]
+            avg_temp = temperature_averages.get(sensor_id, "N/A")
+
+            if isinstance(avg_temp, (int, float)):
+                print(f"{sensor_id:9} \t {latest_temp:11} \t {avg_temp:8.2f}")
+            else:
+                print(f"{sensor_id:9} \t {latest_temp:11} \t {'--':8}")
+
+        time.sleep(5)
+
+# Main
 
 def main():
-    num_sensors = 3
-    queues = [Queue() for _ in range(num_sensors)]
+    sensor_ids = ["sensor_1", "sensor_2", "sensor_3"]
 
-    # Initialize sensors
-    for i in range(num_sensors):
-        threading.Thread(target=simulate_sensor, args=(i,), daemon=True).start()
+    for sensor_id in sensor_ids:
+        thread = Thread(target=simulate_sensor, args=(sensor_id,), daemon=True)
+        thread.start()
 
-    # Initialize processors
-    for i, q in enumerate(queues):
-        threading.Thread(target=process_temperatures, args=(i, q), daemon=True).start()
+    # Start the temperature processing thread
+    processing_thread = Thread(target=process_temperatures, daemon=True)
+    processing_thread.start()
 
-    initialize_display()
+    # Start the display update thread
+    display_thread = Thread(target=display_temperatures, daemon=True)
+    display_thread.start()
 
-    # Update display every 5 seconds
-    while True:
-        for i in range(num_sensors):
-            with lock:
-                if i in latest_temperatures:
-                    queues[i].put(latest_temperatures[i])
-        update_display(latest_temperatures, temperature_averages)
-        time.sleep(5)
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("Simulation stopped.")
 
 if __name__ == "__main__":
     main()
