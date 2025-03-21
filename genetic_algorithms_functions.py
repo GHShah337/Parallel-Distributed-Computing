@@ -1,3 +1,5 @@
+from mpi4py import MPI
+import numpy as np
 import numpy as np
 
 
@@ -15,10 +17,20 @@ def calculate_fitness(route,
            Returns a large negative penalty if the route is infeasible.
     """
     total_distance = 0
-    
-    # add your code here.
-    
-    return total_distance
+
+    for i in range(len(route) - 1):
+        dist = distance_matrix[route[i], route[i + 1]]
+        if dist >= 100000:
+            return -1e6
+        total_distance += dist
+
+    # Add return to depot
+    return_to_depot = distance_matrix[route[-1], route[0]]
+    if return_to_depot >= 100000:
+        return -1e6
+    total_distance += return_to_depot
+
+    return -total_distance
 
 
 def select_in_tournament(population,
@@ -38,11 +50,13 @@ def select_in_tournament(population,
         - list: A list of selected individuals for crossover.
     """
     selected = []
-    
-    # add your code here.
-    
-    return selected
 
+    for _ in range(number_tournaments):
+        idx = np.random.choice(len(population), tournament_size, replace=False)
+        best_idx = idx[np.argmax(scores[idx])]
+        selected.append(population[best_idx])
+
+    return selected
 
 def order_crossover(parent1, parent2):
     """
