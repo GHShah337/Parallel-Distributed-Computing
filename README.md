@@ -1,3 +1,18 @@
+# Summarry of genetic_algorithm_trial.py
+This script solves the shortest route problem using a Genetic Algorithm (GA). Here's what it does:
+Loads a city distance matrix from a CSV file.
+Generates a random population of routes (starting at city 0).
+Repeats over multiple generations to improve solutions:
+Evaluates fitness (shorter distance = better).
+Uses tournament selection to pick parents.
+Applies crossover and mutation to create new routes.
+Replaces weaker routes with stronger offspring.
+If no improvement is seen for several generations, it regenerates the population to escape stagnation.
+Finally, it prints the best route and its total distance.
+This mimics natural evolution to find an optimal or near-optimal solution to the problem
+
+# Question Explanation of my parallalized part
+In this assignment, we implemented a Genetic Algorithm (GA) to solve a shortest route optimization problem. The part that was distributed and parallelized using mpi4py was the fitness evaluation of individuals  routes in the population.
 # Parallelise code output:
 (parallel) student@vg-DSAI-3202-36:~/Parallel-Distributed-Computing$ mpirun -n 4 python genetic_algorithm_trial.py
 Generation 0: Best = -1437.0, Worst = -1000000.0
@@ -202,3 +217,430 @@ Generation 198: Best = -1427.0, Worst = -1000000.0
 Generation 199: Best = -1333.0, Worst = -1000000.0
 Best Solution: [0, np.int64(27), np.int64(23), np.int64(15), np.int64(5), np.int64(8), np.int64(19), np.int64(25), np.int64(31), np.int64(24), np.int64(21), np.int64(16), np.int64(3), np.int64(4), np.int64(12), np.int64(13), np.int64(1), np.int64(28), np.int64(29), np.int64(26), np.int64(22), np.int64(10), np.int64(18), np.int64(2), np.int64(20), np.int64(7), np.int64(6), np.int64(14), np.int64(9), np.int64(11), np.int64(17), np.int64(30)]
 Total Distance: 1300.0
+# 7 Enhance he algorithm:
+1) Added fitness logging (fitness_log.csv) to track improvements over generations.
+2) Increased mutation rate dynamically during stagnation to escape local minima.
+3) Improved regeneration by keeping only top 5 elites and forcing 40% new random individuals for more exploration.
+4) Enhanced selection randomness by increasing tournament size to 5, avoiding selection bias.
+5) Enforced unique population and preserved best solutions (elitism), ensuring continuous improvement.
+# NEw output:
+(parallel) student@vg-DSAI-3202-36:~/Parallel-Distributed-Computing$ mpirun -n 4 python parallel_genetic_algorithm_trial.py
+Generation 0: Best = -1607.0, Worst = -1000000.0
+Generation 1: Best = -1464.0, Worst = -1000000.0
+Generation 2: Best = -1418.0, Worst = -1000000.0
+Generation 3: Best = -1335.0, Worst = -1000000.0
+Generation 4: Best = -1335.0, Worst = -1000000.0
+Generation 5: Best = -1335.0, Worst = -1000000.0
+Generation 6: Best = -1335.0, Worst = -1000000.0
+Generation 7: Best = -1335.0, Worst = -1000000.0
+Regenerating population at generation 8 due to stagnation
+Generation 9: Best = -1335.0, Worst = -1000000.0
+Generation 10: Best = -1335.0, Worst = -1000000.0
+Generation 11: Best = -1335.0, Worst = -1000000.0
+Generation 12: Best = -1335.0, Worst = -1000000.0
+Generation 13: Best = -1288.0, Worst = -1000000.0
+Generation 14: Best = -1288.0, Worst = -1000000.0
+Generation 15: Best = -1288.0, Worst = -1000000.0
+Generation 16: Best = -1169.0, Worst = -1000000.0
+Generation 17: Best = -1169.0, Worst = -1000000.0
+Generation 18: Best = -1169.0, Worst = -1000000.0
+Generation 19: Best = -1169.0, Worst = -1000000.0
+Generation 20: Best = -1169.0, Worst = -1000000.0
+Regenerating population at generation 21 due to stagnation
+Generation 22: Best = -1169.0, Worst = -1000000.0
+Generation 23: Best = -1169.0, Worst = -1000000.0
+Generation 24: Best = -1169.0, Worst = -1000000.0
+Generation 25: Best = -1169.0, Worst = -1000000.0
+Regenerating population at generation 26 due to stagnation
+Generation 27: Best = -1169.0, Worst = -1000000.0
+Generation 28: Best = -1169.0, Worst = -1000000.0
+Generation 29: Best = -1169.0, Worst = -1000000.0
+Generation 30: Best = -1169.0, Worst = -1000000.0
+Regenerating population at generation 31 due to stagnation
+Generation 32: Best = -1169.0, Worst = -1000000.0
+Generation 33: Best = -1169.0, Worst = -1000000.0
+Generation 34: Best = -1169.0, Worst = -1000000.0
+Generation 35: Best = -1169.0, Worst = -1000000.0
+Regenerating population at generation 36 due to stagnation
+Generation 37: Best = -1169.0, Worst = -1000000.0
+Generation 38: Best = -1169.0, Worst = -1000000.0
+Generation 39: Best = -1169.0, Worst = -1000000.0
+Generation 40: Best = -1169.0, Worst = -1000000.0
+Regenerating population at generation 41 due to stagnation
+Generation 42: Best = -1169.0, Worst = -1000000.0
+Generation 43: Best = -1169.0, Worst = -1000000.0
+Generation 44: Best = -1169.0, Worst = -1000000.0
+Generation 45: Best = -1169.0, Worst = -1000000.0
+Regenerating population at generation 46 due to stagnation
+Generation 47: Best = -1169.0, Worst = -1000000.0
+Generation 48: Best = -1169.0, Worst = -1000000.0
+Generation 49: Best = -1169.0, Worst = -1000000.0
+Generation 50: Best = -1169.0, Worst = -1000000.0
+Regenerating population at generation 51 due to stagnation
+Generation 52: Best = -1169.0, Worst = -1000000.0
+Generation 53: Best = -1169.0, Worst = -1000000.0
+Generation 54: Best = -1169.0, Worst = -1000000.0
+Generation 55: Best = -1169.0, Worst = -1000000.0
+Regenerating population at generation 56 due to stagnation
+Generation 57: Best = -1169.0, Worst = -1000000.0
+Generation 58: Best = -1169.0, Worst = -1000000.0
+Generation 59: Best = -1169.0, Worst = -1000000.0
+Generation 60: Best = -1169.0, Worst = -1000000.0
+Regenerating population at generation 61 due to stagnation
+Generation 62: Best = -1169.0, Worst = -1000000.0
+Generation 63: Best = -1169.0, Worst = -1000000.0
+Generation 64: Best = -1169.0, Worst = -1000000.0
+Generation 65: Best = -1169.0, Worst = -1000000.0
+Regenerating population at generation 66 due to stagnation
+Generation 67: Best = -1169.0, Worst = -1000000.0
+Generation 68: Best = -1169.0, Worst = -1000000.0
+Generation 69: Best = -1169.0, Worst = -1000000.0
+Generation 70: Best = -1169.0, Worst = -1000000.0
+Regenerating population at generation 71 due to stagnation
+Generation 72: Best = -1169.0, Worst = -1000000.0
+Generation 73: Best = -1169.0, Worst = -1000000.0
+Generation 74: Best = -1169.0, Worst = -1000000.0
+Generation 75: Best = -1169.0, Worst = -1000000.0
+Generation 76: Best = -1160.0, Worst = -1000000.0
+Generation 77: Best = -1160.0, Worst = -1000000.0
+Generation 78: Best = -1160.0, Worst = -1000000.0
+Generation 79: Best = -1160.0, Worst = -1000000.0
+Generation 80: Best = -1160.0, Worst = -1000000.0
+Regenerating population at generation 81 due to stagnation
+Generation 82: Best = -1160.0, Worst = -1000000.0
+Generation 83: Best = -1126.0, Worst = -1000000.0
+Generation 84: Best = -1126.0, Worst = -1000000.0
+Generation 85: Best = -1126.0, Worst = -1000000.0
+Generation 86: Best = -1126.0, Worst = -1000000.0
+Generation 87: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 88 due to stagnation
+Generation 89: Best = -1126.0, Worst = -1000000.0
+Generation 90: Best = -1126.0, Worst = -1000000.0
+Generation 91: Best = -1126.0, Worst = -1000000.0
+Generation 92: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 93 due to stagnation
+Generation 94: Best = -1126.0, Worst = -1000000.0
+Generation 95: Best = -1126.0, Worst = -1000000.0
+Generation 96: Best = -1126.0, Worst = -1000000.0
+Generation 97: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 98 due to stagnation
+Generation 99: Best = -1126.0, Worst = -1000000.0
+Generation 100: Best = -1126.0, Worst = -1000000.0
+Generation 101: Best = -1126.0, Worst = -1000000.0
+Generation 102: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 103 due to stagnation
+Generation 104: Best = -1126.0, Worst = -1000000.0
+Generation 105: Best = -1126.0, Worst = -1000000.0
+Generation 106: Best = -1126.0, Worst = -1000000.0
+Generation 107: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 108 due to stagnation
+Generation 109: Best = -1126.0, Worst = -1000000.0
+Generation 110: Best = -1126.0, Worst = -1000000.0
+Generation 111: Best = -1126.0, Worst = -1000000.0
+Generation 112: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 113 due to stagnation
+Generation 114: Best = -1126.0, Worst = -1000000.0
+Generation 115: Best = -1126.0, Worst = -1000000.0
+Generation 116: Best = -1126.0, Worst = -1000000.0
+Generation 117: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 118 due to stagnation
+Generation 119: Best = -1126.0, Worst = -1000000.0
+Generation 120: Best = -1126.0, Worst = -1000000.0
+Generation 121: Best = -1126.0, Worst = -1000000.0
+Generation 122: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 123 due to stagnation
+Generation 124: Best = -1126.0, Worst = -1000000.0
+Generation 125: Best = -1126.0, Worst = -1000000.0
+Generation 126: Best = -1126.0, Worst = -1000000.0
+Generation 127: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 128 due to stagnation
+Generation 129: Best = -1126.0, Worst = -1000000.0
+Generation 130: Best = -1126.0, Worst = -1000000.0
+Generation 131: Best = -1126.0, Worst = -1000000.0
+Generation 132: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 133 due to stagnation
+Generation 134: Best = -1126.0, Worst = -1000000.0
+Generation 135: Best = -1126.0, Worst = -1000000.0
+Generation 136: Best = -1126.0, Worst = -1000000.0
+Generation 137: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 138 due to stagnation
+Generation 139: Best = -1126.0, Worst = -1000000.0
+Generation 140: Best = -1126.0, Worst = -1000000.0
+Generation 141: Best = -1126.0, Worst = -1000000.0
+Generation 142: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 143 due to stagnation
+Generation 144: Best = -1126.0, Worst = -1000000.0
+Generation 145: Best = -1126.0, Worst = -1000000.0
+Generation 146: Best = -1126.0, Worst = -1000000.0
+Generation 147: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 148 due to stagnation
+Generation 149: Best = -1126.0, Worst = -1000000.0
+Generation 150: Best = -1126.0, Worst = -1000000.0
+Generation 151: Best = -1126.0, Worst = -1000000.0
+Generation 152: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 153 due to stagnation
+Generation 154: Best = -1126.0, Worst = -1000000.0
+Generation 155: Best = -1126.0, Worst = -1000000.0
+Generation 156: Best = -1126.0, Worst = -1000000.0
+Generation 157: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 158 due to stagnation
+Generation 159: Best = -1126.0, Worst = -1000000.0
+Generation 160: Best = -1126.0, Worst = -1000000.0
+Generation 161: Best = -1126.0, Worst = -1000000.0
+Generation 162: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 163 due to stagnation
+Generation 164: Best = -1126.0, Worst = -1000000.0
+Generation 165: Best = -1126.0, Worst = -1000000.0
+Generation 166: Best = -1126.0, Worst = -1000000.0
+Generation 167: Best = -1126.0, Worst = -1000000.0
+Regenerating population at generation 168 due to stagnation
+Generation 169: Best = -1126.0, Worst = -1000000.0
+Generation 170: Best = -1112.0, Worst = -1000000.0
+Generation 171: Best = -1112.0, Worst = -1000000.0
+Generation 172: Best = -1112.0, Worst = -1000000.0
+Generation 173: Best = -1112.0, Worst = -1000000.0
+Generation 174: Best = -1112.0, Worst = -1000000.0
+Regenerating population at generation 175 due to stagnation
+Generation 176: Best = -1112.0, Worst = -1000000.0
+Generation 177: Best = -1112.0, Worst = -1000000.0
+Generation 178: Best = -1064.0, Worst = -1000000.0
+Generation 179: Best = -1064.0, Worst = -1000000.0
+Generation 180: Best = -1064.0, Worst = -1000000.0
+Generation 181: Best = -1064.0, Worst = -1000000.0
+Generation 182: Best = -1064.0, Worst = -1000000.0
+Regenerating population at generation 183 due to stagnation
+Generation 184: Best = -1064.0, Worst = -1000000.0
+Generation 185: Best = -1064.0, Worst = -1000000.0
+Generation 186: Best = -1064.0, Worst = -1000000.0
+Generation 187: Best = -1064.0, Worst = -1000000.0
+Regenerating population at generation 188 due to stagnation
+Generation 189: Best = -1064.0, Worst = -1000000.0
+Generation 190: Best = -1064.0, Worst = -1000000.0
+Generation 191: Best = -1064.0, Worst = -1000000.0
+Generation 192: Best = -1064.0, Worst = -1000000.0
+Regenerating population at generation 193 due to stagnation
+Generation 194: Best = -1064.0, Worst = -1000000.0
+Generation 195: Best = -1064.0, Worst = -1000000.0
+Generation 196: Best = -1064.0, Worst = -1000000.0
+Generation 197: Best = -1064.0, Worst = -1000000.0
+Generation 198: Best = -1061.0, Worst = -1000000.0
+Generation 199: Best = -1061.0, Worst = -1000000.0
+Best Solution: [0, np.int64(11), np.int64(24), np.int64(12), np.int64(10), np.int64(29), np.int64(2), np.int64(6), np.int64(30), np.int64(9), np.int64(17), np.int64(8), np.int64(1), np.int64(7), np.int64(27), np.int64(31), np.int64(26), np.int64(28), np.int64(23), np.int64(15), np.int64(21), np.int64(19), np.int64(20), np.int64(18), np.int64(4), np.int64(13), np.int64(5), np.int64(22), np.int64(16), np.int64(3), np.int64(14), np.int64(25)]
+Total Distance: 1061.0
+# Comparison
+Before total distance = 1300
+New total distance = 1061
+# 8 8.  Large scale problem
+with extendedn.csv:
+parallel) student@vg-DSAI-3202-36:~/Parallel-Distributed-Computing$ mpirun -n 4 python parallel_genetic_algorithm_trial.py
+Generation 0: Best = -1000000.0, Worst = -1000000.0
+Generation 1: Best = -1000000.0, Worst = -1000000.0
+Generation 2: Best = -1000000.0, Worst = -1000000.0
+Generation 3: Best = -1000000.0, Worst = -1000000.0
+Generation 4: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 5 due to stagnation
+Generation 6: Best = -1000000.0, Worst = -1000000.0
+Generation 7: Best = -1000000.0, Worst = -1000000.0
+Generation 8: Best = -1000000.0, Worst = -1000000.0
+Generation 9: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 10 due to stagnation
+Generation 11: Best = -1000000.0, Worst = -1000000.0
+Generation 12: Best = -1000000.0, Worst = -1000000.0
+Generation 13: Best = -1000000.0, Worst = -1000000.0
+Generation 14: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 15 due to stagnation
+Generation 16: Best = -1000000.0, Worst = -1000000.0
+Generation 17: Best = -1000000.0, Worst = -1000000.0
+Generation 18: Best = -1000000.0, Worst = -1000000.0
+Generation 19: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 20 due to stagnation
+Generation 21: Best = -1000000.0, Worst = -1000000.0
+Generation 22: Best = -1000000.0, Worst = -1000000.0
+Generation 23: Best = -1000000.0, Worst = -1000000.0
+Generation 24: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 25 due to stagnation
+Generation 26: Best = -1000000.0, Worst = -1000000.0
+Generation 27: Best = -1000000.0, Worst = -1000000.0
+Generation 28: Best = -1000000.0, Worst = -1000000.0
+Generation 29: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 30 due to stagnation
+Generation 31: Best = -1000000.0, Worst = -1000000.0
+Generation 32: Best = -1000000.0, Worst = -1000000.0
+Generation 33: Best = -1000000.0, Worst = -1000000.0
+Generation 34: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 35 due to stagnation
+Generation 36: Best = -1000000.0, Worst = -1000000.0
+Generation 37: Best = -1000000.0, Worst = -1000000.0
+Generation 38: Best = -1000000.0, Worst = -1000000.0
+Generation 39: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 40 due to stagnation
+Generation 41: Best = -1000000.0, Worst = -1000000.0
+Generation 42: Best = -1000000.0, Worst = -1000000.0
+Generation 43: Best = -1000000.0, Worst = -1000000.0
+Generation 44: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 45 due to stagnation
+Generation 46: Best = -1000000.0, Worst = -1000000.0
+Generation 47: Best = -1000000.0, Worst = -1000000.0
+Generation 48: Best = -1000000.0, Worst = -1000000.0
+Generation 49: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 50 due to stagnation
+Generation 51: Best = -1000000.0, Worst = -1000000.0
+Generation 52: Best = -1000000.0, Worst = -1000000.0
+Generation 53: Best = -1000000.0, Worst = -1000000.0
+Generation 54: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 55 due to stagnation
+Generation 56: Best = -1000000.0, Worst = -1000000.0
+Generation 57: Best = -1000000.0, Worst = -1000000.0
+Generation 58: Best = -1000000.0, Worst = -1000000.0
+Generation 59: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 60 due to stagnation
+Generation 61: Best = -1000000.0, Worst = -1000000.0
+Generation 62: Best = -1000000.0, Worst = -1000000.0
+Generation 63: Best = -1000000.0, Worst = -1000000.0
+Generation 64: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 65 due to stagnation
+Generation 66: Best = -1000000.0, Worst = -1000000.0
+Generation 67: Best = -1000000.0, Worst = -1000000.0
+Generation 68: Best = -1000000.0, Worst = -1000000.0
+Generation 69: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 70 due to stagnation
+Generation 71: Best = -1000000.0, Worst = -1000000.0
+Generation 72: Best = -1000000.0, Worst = -1000000.0
+Generation 73: Best = -1000000.0, Worst = -1000000.0
+Generation 74: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 75 due to stagnation
+Generation 76: Best = -1000000.0, Worst = -1000000.0
+Generation 77: Best = -1000000.0, Worst = -1000000.0
+Generation 78: Best = -1000000.0, Worst = -1000000.0
+Generation 79: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 80 due to stagnation
+Generation 81: Best = -1000000.0, Worst = -1000000.0
+Generation 82: Best = -1000000.0, Worst = -1000000.0
+Generation 83: Best = -1000000.0, Worst = -1000000.0
+Generation 84: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 85 due to stagnation
+Generation 86: Best = -1000000.0, Worst = -1000000.0
+Generation 87: Best = -1000000.0, Worst = -1000000.0
+Generation 88: Best = -1000000.0, Worst = -1000000.0
+Generation 89: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 90 due to stagnation
+Generation 91: Best = -1000000.0, Worst = -1000000.0
+Generation 92: Best = -1000000.0, Worst = -1000000.0
+Generation 93: Best = -1000000.0, Worst = -1000000.0
+Generation 94: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 95 due to stagnation
+Generation 96: Best = -1000000.0, Worst = -1000000.0
+Generation 97: Best = -1000000.0, Worst = -1000000.0
+Generation 98: Best = -1000000.0, Worst = -1000000.0
+Generation 99: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 100 due to stagnation
+Generation 101: Best = -1000000.0, Worst = -1000000.0
+Generation 102: Best = -1000000.0, Worst = -1000000.0
+Generation 103: Best = -1000000.0, Worst = -1000000.0
+Generation 104: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 105 due to stagnation
+Generation 106: Best = -1000000.0, Worst = -1000000.0
+Generation 107: Best = -1000000.0, Worst = -1000000.0
+Generation 108: Best = -1000000.0, Worst = -1000000.0
+Generation 109: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 110 due to stagnation
+Generation 111: Best = -1000000.0, Worst = -1000000.0
+Generation 112: Best = -1000000.0, Worst = -1000000.0
+Generation 113: Best = -1000000.0, Worst = -1000000.0
+Generation 114: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 115 due to stagnation
+Generation 116: Best = -1000000.0, Worst = -1000000.0
+Generation 117: Best = -1000000.0, Worst = -1000000.0
+Generation 118: Best = -1000000.0, Worst = -1000000.0
+Generation 119: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 120 due to stagnation
+Generation 121: Best = -1000000.0, Worst = -1000000.0
+Generation 122: Best = -1000000.0, Worst = -1000000.0
+Generation 123: Best = -1000000.0, Worst = -1000000.0
+Generation 124: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 125 due to stagnation
+Generation 126: Best = -1000000.0, Worst = -1000000.0
+Generation 127: Best = -1000000.0, Worst = -1000000.0
+Generation 128: Best = -1000000.0, Worst = -1000000.0
+Generation 129: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 130 due to stagnation
+Generation 131: Best = -1000000.0, Worst = -1000000.0
+Generation 132: Best = -1000000.0, Worst = -1000000.0
+Generation 133: Best = -1000000.0, Worst = -1000000.0
+Generation 134: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 135 due to stagnation
+Generation 136: Best = -1000000.0, Worst = -1000000.0
+Generation 137: Best = -1000000.0, Worst = -1000000.0
+Generation 138: Best = -1000000.0, Worst = -1000000.0
+Generation 139: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 140 due to stagnation
+Generation 141: Best = -1000000.0, Worst = -1000000.0
+Generation 142: Best = -1000000.0, Worst = -1000000.0
+Generation 143: Best = -1000000.0, Worst = -1000000.0
+Generation 144: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 145 due to stagnation
+Generation 146: Best = -1000000.0, Worst = -1000000.0
+Generation 147: Best = -1000000.0, Worst = -1000000.0
+Generation 148: Best = -1000000.0, Worst = -1000000.0
+Generation 149: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 150 due to stagnation
+Generation 151: Best = -1000000.0, Worst = -1000000.0
+Generation 152: Best = -1000000.0, Worst = -1000000.0
+Generation 153: Best = -1000000.0, Worst = -1000000.0
+Generation 154: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 155 due to stagnation
+Generation 156: Best = -1000000.0, Worst = -1000000.0
+Generation 157: Best = -1000000.0, Worst = -1000000.0
+Generation 158: Best = -1000000.0, Worst = -1000000.0
+Generation 159: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 160 due to stagnation
+Generation 161: Best = -1000000.0, Worst = -1000000.0
+Generation 162: Best = -1000000.0, Worst = -1000000.0
+Generation 163: Best = -1000000.0, Worst = -1000000.0
+Generation 164: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 165 due to stagnation
+Generation 166: Best = -1000000.0, Worst = -1000000.0
+Generation 167: Best = -1000000.0, Worst = -1000000.0
+Generation 168: Best = -1000000.0, Worst = -1000000.0
+Generation 169: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 170 due to stagnation
+Generation 171: Best = -1000000.0, Worst = -1000000.0
+Generation 172: Best = -1000000.0, Worst = -1000000.0
+Generation 173: Best = -1000000.0, Worst = -1000000.0
+Generation 174: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 175 due to stagnation
+Generation 176: Best = -1000000.0, Worst = -1000000.0
+Generation 177: Best = -1000000.0, Worst = -1000000.0
+Generation 178: Best = -1000000.0, Worst = -1000000.0
+Generation 179: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 180 due to stagnation
+Generation 181: Best = -1000000.0, Worst = -1000000.0
+Generation 182: Best = -1000000.0, Worst = -1000000.0
+Generation 183: Best = -1000000.0, Worst = -1000000.0
+Generation 184: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 185 due to stagnation
+Generation 186: Best = -1000000.0, Worst = -1000000.0
+Generation 187: Best = -1000000.0, Worst = -1000000.0
+Generation 188: Best = -1000000.0, Worst = -1000000.0
+Generation 189: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 190 due to stagnation
+Generation 191: Best = -1000000.0, Worst = -1000000.0
+Generation 192: Best = -1000000.0, Worst = -1000000.0
+Generation 193: Best = -1000000.0, Worst = -1000000.0
+Generation 194: Best = -1000000.0, Worst = -1000000.0
+Regenerating population at generation 195 due to stagnation
+Generation 196: Best = -1000000.0, Worst = -1000000.0
+Generation 197: Best = -1000000.0, Worst = -1000000.0
+Generation 198: Best = -1000000.0, Worst = -1000000.0
+Generation 199: Best = -1000000.0, Worst = -1000000.0
+Best Solution: [0, np.int64(62), np.int64(95), np.int64(19), np.int64(81), np.int64(87), np.int64(31), np.int64(83), np.int64(49), np.int64(57), np.int64(72), np.int64(10), np.int64(50), np.int64(6), np.int64(60), np.int64(11), np.int64(94), np.int64(38), np.int64(71), np.int64(99), np.int64(34), np.int64(17), np.int64(92), np.int64(35), np.int64(4), np.int64(29), np.int64(45), np.int64(30), np.int64(91), np.int64(14), np.int64(1), np.int64(53), np.int64(98), np.int64(7), np.int64(93), np.int64(78), np.int64(22), np.int64(61), np.int64(54), np.int64(77), np.int64(74), np.int64(86), np.int64(63), np.int64(26), np.int64(55), np.int64(67), np.int64(73), np.int64(21), np.int64(96), np.int64(39), np.int64(25), np.int64(13), np.int64(56), np.int64(23), np.int64(3), np.int64(18), np.int64(82), np.int64(89), np.int64(97), np.int64(27), np.int64(52), np.int64(65), np.int64(8), np.int64(64), np.int64(42), np.int64(43), np.int64(76), np.int64(44), np.int64(37), np.int64(28), np.int64(36), np.int64(75), np.int64(68), np.int64(51), np.int64(48), np.int64(33), np.int64(79), np.int64(40), np.int64(80), np.int64(47), np.int64(9), np.int64(41), np.int64(16), np.int64(58), np.int64(88), np.int64(5), np.int64(32), np.int64(84), np.int64(46), np.int64(66), np.int64(90), np.int64(24), np.int64(12), np.int64(2), np.int64(85), np.int64(15), np.int64(70), np.int64(59), np.int64(69), np.int64(20)]
+Total Distance: 1000000.0
+# Q. how to increase car?
+To add more cars to the problem, you'd need to modify the genetic representation so that each chromosome encodes multiple routes, one for each car. Instead of a single list of cities (route), you'd represent a solution as a list of multiple sub-routes, partitioned among cars. Then:
+
+1)Update the fitness function to calculate the total distance for all cars combined.
+2)Add constraints to ensure each city is visited exactly once, and all cars start and end at the depot.
+3)Adjust crossover and mutation operators to handle multi-route chromosomes.
+4) Optionally, apply clustering (e.g. K-means) before evolution to group cities by car.
+
+

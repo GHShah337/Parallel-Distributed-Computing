@@ -1,7 +1,7 @@
 from mpi4py import MPI
 import numpy as np
 import pandas as pd
-from genetic_algorithms_functions import calculate_fitness, \
+from src.genetic_algorithms_functions import calculate_fitness, \
     select_in_tournament, order_crossover, mutate, \
     generate_unique_population
 import sys
@@ -16,43 +16,32 @@ size = comm.Get_size()
 # --------------------------
 # Constants & Config
 # --------------------------
-distance_matrix = pd.read_csv("city_distances.csv").to_numpy()
+distance_matrix = pd.read_csv("Data/city_distances.csv").to_numpy()
 num_nodes = distance_matrix.shape[0]
 population_size = 10000
-num_generations = 200  # Change to 200 for full run
+num_generations = 200
 mutation_rate = 0.1
 stagnation_limit = 5
 
-# --------------------------
-# Feasibility check
-# --------------------------
-def is_feasible(route):
-    for i in range(len(route) - 1):
-        if distance_matrix[route[i], route[i + 1]] >= 100000:
-            return False
-    if distance_matrix[route[-1], route[0]] >= 100000:
-        return False
-    return True
 
 # --------------------------
-# Initial Population (on root)
+# Initial Population
 # --------------------------
 if rank == 0:
     population = generate_unique_population(population_size, num_nodes)
 else:
     population = None
 
-# Broadcast initial population to all processes
 population = comm.bcast(population, root=0)
 
 # --------------------------
-# Begin Generational Loop
+# Generational Loop
 # --------------------------
 best_fitness = int(1e6)
 stagnation_counter = 0
 
 for generation in range(num_generations):
-    regenerated = False  
+    regenerated = False
 
     counts = [len(population) // size + (1 if i < len(population) % size else 0) for i in range(size)]
     starts = [sum(counts[:i]) for i in range(size)]
@@ -84,7 +73,7 @@ for generation in range(num_generations):
             population = generate_unique_population(population_size - len(elites), num_nodes)
             population.extend(elites)
             stagnation_counter = 0
-            regenerated = True  
+            regenerated = True
 
     population = comm.bcast(population, root=0)
     regenerated = comm.bcast(regenerated if rank == 0 else None, root=0)
@@ -92,9 +81,7 @@ for generation in range(num_generations):
     if regenerated:
         continue
 
-    # --------------------------
-    # Evolution
-    # --------------------------
+    # Evolution (with elitism)
     if rank == 0:
         selected = select_in_tournament(population, all_fitness, number_tournaments=len(population))
         np.random.shuffle(selected)
@@ -108,8 +95,14 @@ for generation in range(num_generations):
 
         mutated_offspring = [mutate(route, mutation_rate) for route in offspring]
 
-        population = mutated_offspring
+        # Elitism: Keep top 5
+        top_indices = np.argsort(all_fitness)[-5:]
+        elites = [population[i] for i in top_indices]
 
+        # Replace population (offspring + elites)
+        population = mutated_offspring[:population_size - len(elites)] + elites
+
+        # Ensure uniqueness
         unique_population = set(tuple(ind) for ind in population)
         while len(unique_population) < population_size:
             individual = [0] + list(np.random.permutation(np.arange(1, num_nodes)))
