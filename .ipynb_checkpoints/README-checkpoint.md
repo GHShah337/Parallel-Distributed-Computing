@@ -1,308 +1,176 @@
-# Maze Explorer Game
-
-A simple maze exploration game built with Pygame where you can either manually navigate through a maze or watch an automated solver find its way to the exit.
-
-## Getting Started
-
-### 1. Connect to Your VM
-
-1. Open **<span style="color:red">Visual Studio Code</span>**
-2. Install the "Remote - SSH" extension if you haven't already
-3. Connect to your VM using SSH:
-   - Press `Ctrl+Shift+P` to open the command palette
-   - Type "Remote-SSH: Connect to Host..."
-   - Enter your VM's SSH connection details
-   - Enter your credentials when prompted
-
-4. Install required VS Code extensions:
-   - Press `Ctrl+Shift+X` to open the Extensions view
-   - Search for and install "Python Extension Pack"
-   - Search for and install "Jupyter"
-   - These extensions will provide Python language support, debugging, and Jupyter notebook functionality
-
-### 2. Project Setup
-
-1. Create and activate a Conda environment:
-```bash
-# Create a new conda environment with Python 3.12
-conda create -n maze-runner python=3.12
-
-# Activate the conda environment
-conda activate maze-runner
-```
-
-2. Install Jupyter and the required dependencies:
-```bash
-# Install Jupyter
-pip install jupyter
-
-# Install project dependencies
-pip install -r requirements.txt
-```
-
-3. Open the project in Visual Studio Code and select the interpreter:
-   - Press `Ctrl+Shift+P` to open the command palette
-   - Type "Python: Select Interpreter"
-   - Choose the interpreter from the `maze-runner` environment
-
-## Running the Game
-
-### Basic Usage
-Run the game with default settings (30x30 random maze):
-```bash
-python main.py
-```
-
-### Manual Mode (Interactive)
-Use arrow keys to navigate through the maze:
-```bash
-# Run with default random maze
-python main.py
-
-# Run with static maze
-python main.py --type static
-
-# Run with custom maze dimensions
-python main.py --width 40 --height 40
-```
-
-### Automated Mode (Explorer)
-The explorer will automatically solve the maze and show statistics:
-
-#### Without Visualization (Text-only)
-```bash
-# Run with default random maze
-python main.py --auto
-
-# Run with static maze
-python main.py --type static --auto
-
-# Run with custom maze dimensions
-python main.py --width 40 --height 40 --auto
-```
-
-#### With Visualization (Watch the Explorer in Action)
-```bash
-# Run with default random maze
-python main.py --auto --visualize
-
-# Run with static maze
-python main.py --type static --auto --visualize
-
-# Run with custom maze dimensions
-python main.py --width 40 --height 40 --auto --visualize
-```
-
-### Jupyter Notebook Visualization
-To run the maze visualization in Jupyter Notebook:
-
-1. Make sure you have activated your virtual environment and installed all dependencies
-2. Open the project in Visual Studio Code
-3. Select the correct Python interpreter:
-   - Press `Ctrl+Shift+P` to open the command palette
-   - Type "Python: Select Interpreter"
-   - Choose the interpreter from your created environment:
-     - If using venv: Select the interpreter from `venv/bin/python` (Linux/Mac) or `venv\Scripts\python.exe` (Windows)
-     - If using Conda: Select the interpreter from the `maze-runner` environment
-4. Open the `maze_visualization.ipynb` notebook in VS Code
-5. VS Code will automatically start a Jupyter server
-6. Run all cells to see the maze visualization in action
-
-Available arguments:
-- `--type`: Choose between "random" (default) or "static" maze generation
-- `--width`: Set maze width (default: 30, ignored for static mazes)
-- `--height`: Set maze height (default: 30, ignored for static mazes)
-- `--auto`: Enable automated maze exploration
-- `--visualize`: Show real-time visualization of the automated exploration
-
-## Maze Types
-
-### Random Maze (Default)
-- Generated using depth-first search algorithm
-- Different layout each time you run the program
-- Customizable dimensions
-- Default type if no type is specified
-
-### Static Maze
-- Predefined maze pattern
-- Fixed dimensions (50x50)
-- Same layout every time
-- Width and height arguments are ignored
-
-## How to Play
-
-### Manual Mode
-1. Controls:
-- Use the arrow keys to move the player (<span style="color:blue">blue circle</span>)
-- Start at the <span style="color:green">green square</span>
-- Reach the <span style="color:red">red square</span> to win
-- Avoid the <span style="color:black">black walls</span>
-
-### Automated Mode
-- The explorer uses the right-hand rule algorithm to solve the maze
-- Automatically finds the path from start to finish
-- Displays detailed statistics at the end:
-  - Total time taken
-  - Total moves made
-  - Number of backtrack operations
-  - Average moves per second
-- Works with both random and static mazes
-- Optional real-time visualization:
-  - Shows the explorer's position in <span style="color:blue">blue</span>
-  - Updates at 30 frames per second
-  - Pauses for 2 seconds at the end to show the final state
-
-## Project Structure
-
-```
-maze-runner/
-├── src/
-│   ├── __init__.py
-│   ├── constants.py
-│   ├── maze.py
-│   ├── player.py
-│   ├── game.py
-│   ├── explorer.py
-│   └── visualization.py
-├── main.py
-├── maze_visualization.ipynb
-├── requirements.txt
-└── README.md
-```
-
-## Code Overview
-
-### Main Files
-- `main.py`: Entry point of the game. Handles command-line arguments and initializes the game with specified parameters.
-- `requirements.txt`: Lists all Python package dependencies required to run the game.
-
-### Source Files (`src/` directory)
-- `__init__.py`: Makes the src directory a Python package.
-- `constants.py`: Contains all game constants like colors, screen dimensions, cell sizes, and game settings.
-- `maze.py`: Implements maze generation using depth-first search algorithm and handles maze-related operations.
-- `player.py`: Manages player movement, collision detection, and rendering of the player character.
-- `game.py`: Core game implementation including the main game loop, event handling, and game state management.
-- `explorer.py`: Implements automated maze solving using the right-hand rule algorithm and visualization.
-- `visualization.py`: Contains functions for maze visualization.
-
-## Game Features
-
-- Randomly generated maze using depth-first search algorithm
-- Predefined static maze option
-- Manual and automated exploration modes
-- Real-time visualization of automated exploration
-- Smooth player movement
-- Collision detection with walls
-- Win condition when reaching the exit
-- Performance metrics (time and moves) for automated solving
-
-## Development
-
-The project is organized into several modules:
-- `constants.py`: Game constants and settings
-- `maze.py`: Maze generation and management
-- `player.py`: Player movement and rendering
-- `game.py`: Game implementation and main loop
-- `explorer.py`: Automated maze solving implementation and visualization
-- `visualization.py`: Functions for maze visualization
-
-## Getting Started with the Assignment
-
-Before attempting the questions below, please follow these steps:
-
-1. Open the `maze_visualization.ipynb` notebook in VS Code
-2. Run all cells in the notebook to:
-   - Understand how the maze is generated
-   - See how the explorer works
-   - Observe the visualization of the maze solving process
-   - Get familiar with the statistics and metrics
-
-This will help you better understand the system before attempting the questions.
 
 ## Student Questions
 
 ### Question 1 (10 points)
-Explain how the automated maze explorer works. Your answer should include:
-1. The algorithm used by the explorer
-2. How it handles getting stuck in loops
-3. The backtracking strategy it employs
-4. The statistics it provides at the end of exploration
-
-To answer this question:
-1. Run the explorer both with and without visualization
-2. Observe its behavior in different maze types
-3. Analyze the statistics it provides
-4. Read the source code in `explorer.py` to understand the implementation details
-
-Your answer should demonstrate a clear understanding of:
-- The right-hand rule algorithm
-- The loop detection mechanism
-- The backtracking strategy
-- The performance metrics collected
+Explain how the automated maze explorer works.
+### Answer:
+1) the explorer uses the right-hand rule algorithm, which simulates keeping your right hand on a wall while exploring a maze. The logic is:
+   Always try to move right relative to your current direction.
+If that’s blocked, try to go straight.
+If that’s blocked too, try to go left.
+If everything is blocked, turn around and move backward
+2)  To avoid getting stuck in cycles (moving back and forth between the same few cells), the explorer tracks its last three moves using a deque: self.move_history = deque(maxlen=3). if all three recent positions are the same, it means the explorer is stuck in a loop, and it triggers backtracking.
+3) When stuck, the explorer calls backtrack():
+   it walks backward through its past moves, using the find_backtrack_path() function.
+   It searches for the last position that had multiple possible paths using count_available_choices().
+   Once found, the explorer follows the reversed path back to that point and tries unexplored directions.
+   This strategy ensures that the explorer doesn’t stay stuck at dead ends or in cycles, and can eventually explore the entire maze.
+4) Statistics matrix(with visualization):
+=== Maze Exploration Statistics ===
+Total time taken: 42.35 seconds
+Total moves made: 1279
+Number of backtrack operations: 0
+Average moves per second: 30.20
+==================================
 
 ### Question 2 (30 points)
-Modify the main program to run multiple maze explorers simultaneously. This is because we want to find the best route out of the maze. Your solution should:
-1. Allow running multiple explorers in parallel
-2. Collect and compare statistics from all explorers
-3. Display a summary of results showing which explorer performed best
-
-*Hints*:
-- To get 20 points, use use multiprocessing.
-- To get 30 points, use MPI4Py on multiple machines.
-- Use Celery and RabbitMQ to distribute the exploration tasks. You will get full marks plus a bonus.
-- Implement a task queue system
-- Do not visualize the exploration, just run it in parallel
-- Store results for comparison
-
-**To answer this question:** 
-1. Study the current explorer implementation
-2. Design a parallel execution system
-3. Implement task distribution
-4. Create a results comparison system
+Modify the main program to run multiple maze explorers simultaneously. This is because we want to find the best route out of the maze.
+### Answer:
+=== Summary of All Explorers ===
+{'Explorer ID': 0, 'Time Taken': 0.0, 'Total Moves': 1279, 'Backtracks': 0, 'Moves/sec': 749338.57}
+{'Explorer ID': 1, 'Time Taken': 0.0, 'Total Moves': 1279, 'Backtracks': 0, 'Moves/sec': 1046734.6}
+{'Explorer ID': 2, 'Time Taken': 0.0, 'Total Moves': 1279, 'Backtracks': 0, 'Moves/sec': 1013128.39}
+{'Explorer ID': 3, 'Time Taken': 0.0, 'Total Moves': 1279, 'Backtracks': 0, 'Moves/sec': 993980.88}
 
 ### Question 3 (10 points)
 Analyze and compare the performance of different maze explorers on the static maze. Your analysis should:
+### Answer:
+1) === Summary of All Explorers ===
+{'Explorer ID': 0, 'Time Taken': 0.0, 'Total Moves': 1279, 'Backtracks': 0, 'Moves/sec': 749338.57}
+{'Explorer ID': 1, 'Time Taken': 0.0, 'Total Moves': 1279, 'Backtracks': 0, 'Moves/sec': 1046734.6}
+{'Explorer ID': 2, 'Time Taken': 0.0, 'Total Moves': 1279, 'Backtracks': 0, 'Moves/sec': 1013128.39}
+{'Explorer ID': 3, 'Time Taken': 0.0, 'Total Moves': 1279, 'Backtracks': 0, 'Moves/sec': 993980.88}
+2) When running multiple explorers on the static maze, I noticed that all explorers solved the maze with the same number of moves (1279), because the maze layout was fixed and the explorer algorithm is deterministic.
+3) The number of backtracks was zero in all cases, indicating that the algorithm found a clean path without needing to reverse.
+4) The only difference between explorers was the Moves per second (Moves/sec), which varied slightly between processes due to the GPU capabilities and efficiency.
+### After improvement to the right hand rule
+=== Summary of All Explorers ===
+{'Explorer ID': 0, 'Time Taken': 0.0, 'Total Moves': 786, 'Backtracks': 85, 'Moves/sec': 400719.94}
+{'Explorer ID': 1, 'Time Taken': 0.0, 'Total Moves': 786, 'Backtracks': 85, 'Moves/sec': 418100.56}
+{'Explorer ID': 2, 'Time Taken': 0.0, 'Total Moves': 786, 'Backtracks': 85, 'Moves/sec': 424507.2}
+{'Explorer ID': 3, 'Time Taken': 0.0, 'Total Moves': 786, 'Backtracks': 85, 'Moves/sec': 423797.78}
 
-1. Run multiple explorers (at least 4 ) simultaneously on the static maze
-2. Collect and compare the following metrics for each explorer:
-   - Total time taken to solve the maze
-   - Number of moves made
-   - *Optional*:
-     - Number of backtrack operations
 
-3. What do you notice regarding the performance of the explorers? Explain the results and the observations you made.
-
+   
 ### Question 4 (20 points)
-Based on your analysis from Question 3, propose and implement enhancements to the maze explorer to overcome its limitations. Your solution should:
+Based on your analysis from Question 3, propose and implement enhancements to the maze explorer to overcome its limitations.
+### Answer:
+***Identified Limitations of the Original (Right-Hand Rule) Explorer***
+1) Non-optimal pathfinding:
+The right-hand rule is a heuristic method. While it can solve a maze, it doesn’t guarantee the shortest path and often leads to unnecessary detours.
+2) Backtracking overhead:
+The explorer needs to remember where it’s been and manually backtrack to previous junctions when stuck, which increases move count and runtime.
+3) Repetitive behavior:
+It may re-explore parts of the maze it has already checked, especially without tracking decision paths effectively.
+4) No learning or optimization:
+The explorer always follows the same logic and cannot adapt or improve its path based on previous runs.
 
-1. Identify and explain the main limitations of the current explorer:
+***Implemented Enhancements (2 Key Improvements)***
+1. Path Optimality with A*
 
-2. Propose specific improvements to the exploration algorithm:
+We replaced the trial-and-error exploration of the right-hand rule with a heuristic-based search. A* uses a priority queue to always expand the most promising path first, guaranteeing the shortest path in grid-based mazes.
 
-3. Implement at least two of the proposed improvements:
+2. No Backtracking Required
 
-Your answer should include:
-1. A detailed explanation of the identified limitations
-2. Documentation of your proposed improvements
-3. The modified code with clear comments explaining the changes
+The A* algorithm doesn’t need to backtrack manually. It constructs the optimal path from start to goal in a single pass by remembering the parent of each visited cell
+***Modified Code***
+def solve(self):
+    self.start_time = time.time()
+
+    def heuristic(a, b):
+        return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+    start = (self.x, self.y)
+    goal = self.maze.end_pos
+
+    open_set = []
+    heapq.heappush(open_set, (0, start))
+    came_from = {}
+    g_score = {start: 0}
+    f_score = {start: heuristic(start, goal)}
+    visited = set()
+
+    while open_set:
+        _, current = heapq.heappop(open_set)
+        if current == goal:
+            break
+
+        visited.add(current)
+
+        for dx, dy in [(1,0), (-1,0), (0,1), (0,-1)]:
+            neighbor = (current[0] + dx, current[1] + dy)
+            x, y = neighbor
+            if (0 <= x < self.maze.width and
+                0 <= y < self.maze.height and
+                self.maze.grid[y][x] == 0):
+
+                tentative_g_score = g_score[current] + 1
+                if neighbor in visited and tentative_g_score >= g_score.get(neighbor, float('inf')):
+                    continue
+
+                if tentative_g_score < g_score.get(neighbor, float('inf')):
+                    came_from[neighbor] = current
+                    g_score[neighbor] = tentative_g_score
+                    f_score[neighbor] = tentative_g_score + heuristic(neighbor, goal)
+                    heapq.heappush(open_set, (f_score[neighbor], neighbor))
+
+    self.moves = []
+    current = goal
+    while current != start:
+        self.moves.append(current)
+        current = came_from[current]
+    self.moves.append(start)
+    self.moves.reverse()
+
+    self.end_time = time.time()
+    time_taken = self.end_time - self.start_time
+
+    self.print_statistics(time_taken)
+    return time_taken, self.moves
 
 ### Question 5 (20 points)
-
 Compare the performance of your enhanced explorer with the original:
-   - Run both versions on the static maze
-   - Collect and compare all relevant metrics
-   - Create visualizations showing the improvements
-   - Document the trade-offs of your enhancements
-Your answer should include:
-1. Performance comparison results and analysis
-2. Discussion of any trade-offs or new limitations introduced
+### Answer:
+***Performance Comparison – Original vs Enhanced Explorer***
 
-### Final points 6 (10 points)
-1. Solve the static maze in 150 moves or less to get 10 points.
-2. Solve the static maze in 135 moves or less to get 15 points.
-3. Solve the static maze in 130 moves or less to get 100% in your assignment.
+| Metric              |Right-Hand Rule Explorer(imp) | A* Explorer          |
+|---------------------|--------------------------|----------------------|
+| Total Moves         | ~786                     | 128                  |
+| Backtracks          | 85                       | 0                    |
+| Time Taken          | ~0.01–0.05 sec           | 0.00 sec             |
+| Optimal Path        | No                       | Yes                  |
+| Deterministic       | Yes                      | Yes                  |
+| Repeated Paths      | Yes                      | No                   |
 
-### Bonus points
-1. Fastest solver to get top  10% routes (number of moves)
-2. Finding a solution with no backtrack operations
-3. Least number of moves.
+***Trade-Offs and Features – Right-Hand Rule vs A***
+### Trade-Offs and Features – Right-Hand Rule vs A*
+
+| Aspect                  | Right-Hand Rule          | A* Algorithm              |
+|-------------------------|--------------------------|---------------------------|
+| Simplicity              | Very easy to implement   | Slightly more complex     |
+| Shortest Path Guarantee | No                       | Yes                       |
+| Memory Usage            | Low                      | Moderate                  |
+| Backtracking Required   | Yes                      | No                        |
+| Exploratory Efficiency  | Poor                     | Excellent                 |
+| Suitable for Dynamic Mazes | Good                 | Better for static         |
+
+### Question 6 (10 points)
+
+### Answer: 
+Achieve the best result of 128 moves
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
